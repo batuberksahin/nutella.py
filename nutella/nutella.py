@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import requests
 import re
 
@@ -16,9 +14,9 @@ headers = {
 
 def main():
     for nutella, url in NUTELLAS.items():
-        price = re.search('<span itemprop="price">(.*?)</span>', requests.get(url, headers=headers).content)
+        price = re.search('<span class="value">([^<]*)</span>', requests.get(url, headers=headers).text)
         if price:
-            print "  \xF0\x9F\x8D\xAB  {}: {} TL.".format(nutella, price.group(1))
+            print("  \xF0\x9F\x8D\xAB  {}: {} TL.".format(nutella, price.group(1).replace(' ', '')))
 
 
 if __name__ == '__main__':
